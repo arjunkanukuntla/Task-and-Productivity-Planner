@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F6F2EA">
+  <title>Task and Productivity Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="preferences.js" defer></script>
+  <script src="script.js?v=checklist-steps-2" defer></script>
+</head>
+<body>
+  <main class="planner" id="planner-app" hidden>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="brand-link" href="/">
+        <span class="brand-mark" aria-hidden="true">TP</span>
+        <span>Task and Productivity Planner</span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="/app.html" aria-current="page">Planner</a>
+        <a class="nav-link" href="/profile.html">Profile &amp; settings</a>
+        <button class="button-text" id="signout-button" type="button">Sign out</button>
+      </div>
+    </nav>
+    <header class="page-header">
+      <p class="eyebrow">STUDENT PLANNER</p>
+      <h1>Task and Productivity Planner</h1>
+      <div class="page-meta">
+        <p class="today" id="today-date"></p>
+        <p class="welcome-copy">Welcome, <span id="account-name"></span></p>
+      </div>
+    </header>
+
+    <div class="notice" id="app-notice" role="status" hidden></div>
+    <div class="alert-banner" id="deadline-alert" aria-live="polite" hidden></div>
+
+    <section class="progress-section" aria-label="Progress">
+      <div class="progress-copy" id="progress-copy"></div>
+      <div class="progress-track" role="progressbar" aria-label="Tasks completed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </section>
+
+    <section class="entry-section" aria-labelledby="entry-heading">
+      <h2 id="entry-heading">Add a task</h2>
+      <form id="task-form" novalidate>
+        <div class="field">
+          <label for="task-title">Title</label>
+          <input id="task-title" name="title" type="text" maxlength="100" autocomplete="off" required aria-describedby="title-error">
+          <p class="field-error" id="title-error" aria-live="polite"></p>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="task-deadline">Deadline</label>
+            <input id="task-deadline" name="deadline" type="datetime-local" required aria-describedby="deadline-error">
+            <p class="field-error" id="deadline-error" aria-live="polite"></p>
+          </div>
+          <div class="field priority-field">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority" name="priority">
+              <option value="High">High</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="task-checklist">Process / progress steps <span class="optional-label">(optional)</span></label>
+          <textarea id="task-checklist" name="checklist" rows="4" maxlength="5049" placeholder="One step per line&#10;Read the notes&#10;Complete the draft&#10;Submit the assignment"></textarea>
+          <p class="field-help">Add up to 50 steps. Each line becomes a checklist item.</p>
+        </div>
+        <div class="form-actions">
+          <button class="button-primary" id="submit-task" type="submit">Add task</button>
+          <button class="button-text cancel-button" id="cancel-edit" type="button" hidden>Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="tasks-section" aria-labelledby="tasks-heading">
+      <p class="list-intro">Break work into steps, then make time for a focused study block.</p>
+      <div class="list-toolbar">
+        <h2 id="tasks-heading">Your tasks</h2>
+        <div class="list-controls">
+          <div class="control">
+            <label for="priority-filter">Show</label>
+            <select id="priority-filter">
+              <option value="All">All priorities</option>
+              <option value="High">High</option>
+              <option value="Medium">Medium</option>
+              <option value="Low">Low</option>
+            </select>
+          </div>
+          <div class="control">
+            <label for="task-sort">Sort</label>
+            <select id="task-sort">
+              <option value="deadline">Deadline</option>
+              <option value="priority">Priority</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <p class="empty-state" id="empty-state" hidden>No tasks yet. Add your first task above.</p>
+      <ul class="task-list" id="task-list" aria-live="polite"></ul>
+    </section>
+  </main>
+  <script src="auth.js" defer></script>
+</body>
+</html>

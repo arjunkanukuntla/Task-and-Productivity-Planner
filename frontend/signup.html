@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F6F2EA">
+  <title>Create account | Task and Productivity Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="auth.js" defer></script>
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="auth-home-link" href="/">Back to home</a>
+    <p class="eyebrow">STUDENT PLANNER</p>
+    <h1>Create your account</h1>
+    <p class="auth-intro">Your tasks stay private to your account.</p>
+    <form id="signupform" class="auth-form">
+      <div class="field">
+        <label for="signup-username">Name</label>
+        <input id="signup-username" name="username" type="text" autocomplete="name" required minlength="2" maxlength="40">
+      </div>
+      <div class="field">
+        <label for="signup-email">Email</label>
+        <input id="signup-email" name="email" type="email" autocomplete="email" required maxlength="254">
+      </div>
+      <div class="field">
+        <label for="signup-password">Password</label>
+        <input id="signup-password" name="password" type="password" autocomplete="new-password" required minlength="8">
+        <p class="field-hint">Use at least 8 characters.</p>
+      </div>
+      <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
+      <button class="button-primary" type="submit">Create account</button>
+    </form>
+    <p class="auth-switch">Already have an account? <a href="signin.html">Sign in</a></p>
+  </main>
+</body>
+</html>

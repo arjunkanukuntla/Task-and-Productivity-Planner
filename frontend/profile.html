@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F6F2EA">
+  <title>Profile &amp; settings | Task and Productivity Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="preferences.js" defer></script>
+  <script src="auth.js" defer></script>
+  <script src="profile.js" defer></script>
+</head>
+<body>
+  <div class="account-shell" id="profile-app" hidden>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a class="brand-link" href="/">
+        <span class="brand-mark" aria-hidden="true">TP</span>
+        <span>Task and Productivity Planner</span>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="/app.html">Planner</a>
+        <a class="nav-link" href="/profile.html" aria-current="page">Profile &amp; settings</a>
+        <button class="button-text" id="signout-button" type="button">Sign out</button>
+      </div>
+    </nav>
+
+    <main class="account-main">
+      <header class="page-header">
+        <p class="eyebrow">YOUR ACCOUNT</p>
+        <h1>Profile &amp; settings</h1>
+        <p class="account-intro">Your account details and a planner preference.</p>
+      </header>
+      <div class="notice" id="app-notice" role="status" hidden></div>
+
+      <section class="account-section" aria-labelledby="profile-heading">
+        <div class="account-section-heading">
+          <div>
+            <p class="eyebrow">PROFILE</p>
+            <h2 id="profile-heading">Account details</h2>
+          </div>
+          <div class="profile-initials" id="profile-initials" aria-hidden="true"></div>
+        </div>
+        <dl class="profile-details">
+          <div><dt>Name</dt><dd id="profile-name"></dd></div>
+          <div><dt>Email</dt><dd id="profile-email"></dd></div>
+          <div><dt>Member since</dt><dd id="profile-member-since"></dd></div>
+        </dl>
+        <p class="field-hint">Your email is private to your account and used to sign in.</p>
+      </section>
+
+      <section class="account-section" aria-labelledby="settings-heading">
+        <div class="account-section-heading">
+          <div>
+            <p class="eyebrow">PREFERENCES</p>
+            <h2 id="settings-heading">Planner settings</h2>
+          </div>
+        </div>
+        <form id="preferences-form">
+          <div class="field settings-field">
+            <label for="default-sort">Default task order</label>
+            <select id="default-sort" name="sort">
+              <option value="deadline">Soonest deadline first</option>
+              <option value="priority">Highest priority first</option>
+            </select>
+            <p class="field-hint">This order is selected when you open your planner. You can still change it any time.</p>
+          </div>
+          <div class="form-actions">
+            <button class="button-primary" type="submit">Save preference</button>
+            <a class="button-text" href="/app.html">Back to planner</a>
+          </div>
+          <p class="settings-status" id="preferences-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

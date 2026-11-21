@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#F6F2EA">
+  <title>Sign in | Task and Productivity Planner</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="auth.js" defer></script>
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="auth-home-link" href="/">Back to home</a>
+    <p class="eyebrow">STUDENT PLANNER</p>
+    <h1>Welcome back</h1>
+    <p class="auth-intro">Sign in to pick up where you left off.</p>
+    <form id="signinform" class="auth-form">
+      <div class="field">
+        <label for="signin-email">Email</label>
+        <input id="signin-email" name="email" type="email" autocomplete="email" required maxlength="254">
+      </div>
+      <div class="field">
+        <label for="signin-password">Password</label>
+        <input id="signin-password" name="password" type="password" autocomplete="current-password" required>
+      </div>
+      <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
+      <button class="button-primary" type="submit">Sign in</button>
+    </form>
+    <p class="auth-switch">New here? <a href="signup.html">Create an account</a></p>
+  </main>
+</body>
+</html>
