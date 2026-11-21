@@ -1,103 +1,127 @@
 # Task and Productivity Planner
 
-A web-based planner for organizing coursework, tracking assignment progress, and protecting focused study time. Add deadlines and priorities, break work into checklist steps, and keep a task-linked record of completed focus sessions.
+**Author:** Arjun
 
-**Project by Arjun**
+## Overview
+
+Task and Productivity Planner is a full-stack coursework planning application. It combines deadline and priority tracking, per-task progress checklists, and task-linked focus sessions in an authenticated workspace.
+
+The project is implemented with a browser-based frontend, a Node.js and Express application server, and a MySQL database.
 
 ## Features
 
-- **Task management:** Create, edit, complete, and delete tasks with deadlines and High, Medium, or Low priority.
-- **Process and progress steps:** Add up to 50 checklist steps per task, one step per line. Check steps off as work progresses.
-- **Deadline awareness:** See upcoming, due-soon, and overdue status, with a summary of pending work.
-- **Focus sessions:** Start a 25-minute focus block linked to a task. The server verifies elapsed time before recording completion.
-- **Accounts and persistence:** Sign up and sign in to a personal planner. Tasks and focus-session data are stored in MySQL.
-- **Planner preferences:** Save the default task sort order in the browser.
-- **Responsive interface:** Use the planner on desktop or mobile-sized screens.
+- Create, edit, complete, filter, sort, and delete tasks.
+- Assign deadlines and High, Medium, or Low priority.
+- Add up to 50 progress checklist steps to a task and track each step independently.
+- Review task completion, pending work, overdue tasks, and focus-session totals.
+- Start a 25-minute focus session associated with a task. Completion is recorded after server-side elapsed-time validation.
+- Register and sign in to a personal account; task data is persisted in MySQL.
+- Save the preferred task sort order in the browser.
+- Use a responsive interface for desktop and mobile viewport sizes.
 
-## Technology
+## Architecture
 
-- Frontend: HTML, CSS, and vanilla JavaScript
-- Backend: Node.js and Express
-- Database: MySQL with InnoDB
-- Authentication: bcrypt password hashing and server-managed sessions
+| Layer | Technologies | Responsibilities |
+| --- | --- | --- |
+| Frontend | HTML, CSS, vanilla JavaScript | Landing page, account forms, planner, profile, and browser preferences |
+| Application server | Node.js, Express | Authentication, validation, task APIs, focus-session lifecycle, and security middleware |
+| Persistence | MySQL, InnoDB | User accounts, tasks, sessions, authentication attempts, and focus-session records |
 
 ## Requirements
 
 - Node.js 18 or newer
+- npm
 - MySQL 8 or a compatible MySQL server
-- npm (included with Node.js)
 
-## Local setup
+## Local development
 
-1. **Create a database** in MySQL:
+### 1. Create a database
 
-   ```sql
-   CREATE DATABASE task_planner
-     CHARACTER SET utf8mb4
-     COLLATE utf8mb4_unicode_ci;
-   ```
+Create a database in MySQL:
 
-2. **Configure the database connection.** Create a `.env` file in the project root (next to this README) with your local values:
+```sql
+CREATE DATABASE task_planner
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_unicode_ci;
+```
 
-   ```dotenv
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_USER=your_mysql_user
-   DB_PASSWORD=your_mysql_password
-   DB_NAME=task_planner
-   PORT=3002
-   ```
+### 2. Configure the application
 
-   Keep `.env` private. It is excluded from Git by `.gitignore`; do not commit credentials.
+Create a `.env` file in the project root, alongside this README:
 
-3. **Install dependencies and start the application:**
+```dotenv
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=your_mysql_user
+DB_PASSWORD=your_mysql_password
+DB_NAME=task_planner
+PORT=3002
+```
 
-   ```powershell
-   cd backend
-   npm install
-   npm start
-   ```
+The server reads the database settings from this file. `.env` is excluded by `.gitignore` and must not be committed.
 
-4. Open [http://localhost:3002](http://localhost:3002) in your browser and create an account.
+### 3. Install dependencies and start the server
 
-In development mode, the server creates the required tables automatically. Existing task tables are also updated to include the checklist column when needed.
+Run these commands from the project root in PowerShell:
+
+```powershell
+Set-Location backend
+npm install
+npm start
+```
+
+The server listens on `http://localhost:3002` by default. Open that address in a browser to access the application.
+
+In development mode, the server creates the required tables at startup and adds the checklist column to an older `tasks` table if needed.
 
 ## Production database setup
 
-For production, set `NODE_ENV=production` and configure the database connection through environment variables. The server verifies that the schema exists but does not create it. Run [`backend/schema.sql`](backend/schema.sql) against the selected database before starting the server.
+In production, set `NODE_ENV=production` and provide the database connection through environment variables. Production startup verifies the schema but does not create or alter tables. Apply [`backend/schema.sql`](backend/schema.sql) to the target database before starting the server.
 
-Use a dedicated database account with least-privilege access, configure HTTPS and secure secret storage, and arrange appropriate backups and monitoring before deploying.
+Production deployment requires HTTPS, a dedicated least-privilege database account, secure secret management, backups, and operational monitoring.
 
 ## Tests
 
-Run the backend validation tests from the `backend` directory:
+The backend validation tests use Node.js's built-in test runner. Run them from the `backend` directory:
 
 ```powershell
 npm test
 ```
 
-## Project files
+## Repository structure
 
 ```text
 .
 ├── backend/
-│   ├── index.js                 # Express app, API, and database setup
-│   ├── schema.sql               # Production database schema
-│   ├── validation.js            # Input validation
-│   └── test/                    # Backend tests
+│   ├── index.js
+│   ├── schema.sql
+│   ├── validation.js
+│   └── test/
 ├── frontend/
-│   ├── index.html               # Public landing page
-│   ├── app.html                 # Authenticated planner
-│   └── ...                      # Authentication, profile, styles, and scripts
+│   ├── index.html
+│   ├── app.html
+│   ├── profile.html
+│   ├── signin.html
+│   ├── signup.html
+│   └── ...
 ├── Task_and_Productivity_Planner_Presentation.pptx
 └── Task_and_Productivity_Planner_Project_Report.docx
 ```
 
+## Security
+
+- Passwords are hashed with bcrypt.
+- Random session tokens are stored as hashes and issued in HttpOnly, SameSite cookies.
+- Database operations use parameterized queries, and task access is scoped to the authenticated user.
+- Server-side validation, same-origin checks for write requests, and authentication-attempt limits are applied.
+
+These controls do not replace production deployment requirements such as HTTPS and secure database and secret configuration.
+
 ## Scope and limitations
 
-This is a coursework planning prototype. It does not integrate with an LMS and does not provide email verification or password recovery. A completed focus session records that its duration elapsed; it does not measure learning outcomes or verify activity during the session.
+The application is a coursework planning prototype. It does not integrate with a learning management system or provide email verification or password recovery. A completed focus session indicates that the configured duration elapsed; it does not verify user activity or measure learning outcomes.
 
-## Project materials
+## Project documentation
 
 - [Project presentation](Task_and_Productivity_Planner_Presentation.pptx)
 - [Project report](Task_and_Productivity_Planner_Project_Report.docx)
